@@ -1,0 +1,46 @@
+function generateTruthTable() {
+    const numVars = parseInt(prompt("Enter the number of variables:"));
+    const expression = prompt("Enter a logical expression (e.g., A && B, A || B):");
+
+    if (isNaN(numVars) || numVars < 1 || numVars > 10) {
+        console.log("Please enter a valid number of variables (between 1 and 10).");
+        return;
+    }
+
+    const numRows = Math.pow(2, numVars);
+    let header = "";
+    
+    // Create table header
+    for (let i = 0; i < numVars; i++) {
+        header += `Var ${String.fromCharCode(65 + i)}\t`;
+    }
+    header += `| Result (${expression})\n`;
+    console.log(header);
+
+    // Create table rows
+    for (let i = 0; i < numRows; i++) {
+        let row = "";
+        let values = {};
+        
+        // 각 변수에 대해 값 할당
+        for (let j = numVars - 1; j >= 0; j--) {
+            let variableName = String.fromCharCode(65 + (numVars - 1 - j)); // A, B, C, ... 
+            let variableValue = (i >> j) & 1;
+            values[variableName] = variableValue;
+            row += `${variableValue}\t`;
+        }
+
+        // 식 평가 (eval 사용)
+        let evalExpression = expression;
+        for (let key in values) {
+            evalExpression = evalExpression.replace(new RegExp(key, 'g'), values[key]);
+        }
+        
+        let result = eval(evalExpression) ? 1 : 0; // true/false를 1/0으로 변환
+        row += `| ${result}\n`;
+        console.log(row);
+    }
+}
+
+// 실행
+generateTruthTable();
