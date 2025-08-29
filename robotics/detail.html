@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Robotics 세부 분야 가이드</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .fields-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .field-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .field-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+            background-size: 300% 300%;
+            animation: gradient 3s ease infinite;
+        }
+
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .field-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        .field-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .field-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .manipulation { background: linear-gradient(45deg, #ff6b6b, #ff8e8e); }
+        .mobile { background: linear-gradient(45deg, #4ecdc4, #44a08d); }
+        .hri { background: linear-gradient(45deg, #45b7d1, #4fa8c7); }
+        .medical { background: linear-gradient(45deg, #96ceb4, #8fbc8f); }
+        .perception { background: linear-gradient(45deg, #ffeaa7, #fdcb6e); }
+        .learning { background: linear-gradient(45deg, #fd79a8, #e84393); }
+        .foundation { background: linear-gradient(45deg, #6c5ce7, #a29bfe); }
+        .contact { background: linear-gradient(45deg, #fd8065, #ff6b9d); }
+        .sim2real { background: linear-gradient(45deg, #00cec9, #55efc4); }
+        .humanoid { background: linear-gradient(45deg, #636e72, #b2bec3); }
+
+        .field-subtitle {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .subtopics {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .subtopics li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .subtopics li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-size: 0.8rem;
+        }
+
+        .subtopic-title {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .subtopic-desc {
+            color: #5a6c7d;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .applications {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .applications-title {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .applications-list {
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 30%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .fields-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .field-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <div class="container">
+        <div class="fields-grid">
+            <div class="field-card">
+                <div class="field-title">
+                    <div class="field-icon manipulation">🦾</div>
+                    Manipulation Robotics
+                </div>
+                <div class="field-subtitle">조작 로봇공학</div>
+                <ul class="subtopics">
+                    <li>
+                        <div class="subtopic-title">Grasping and Dexterous Manipulation</div>
+                        <div class="subtopic-desc">물체를 잡고 정교하게 조작하는 기술 (예: 계란을 깨뜨리지 않고 잡기, 나사 돌리기)</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Object Recognition and Pose Estimation</div>
+                        <div class="subtopic-desc">물체가 무엇인지 인식하고 3D 공간에서의 위치와 방향을 파악하는 기술</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Multi-modal Sensing</div>
+                        <div class="subtopic-desc">시각, 촉각, 힘 센서를 동시에 활용해 물체를 인식하고 조작하는 기술</div>
+                    </li>
+                </ul>
+                <div class="applications">
+                    <div class="applications-title">📍 주요 응용 분야</div>
+                    <div class="applications-list">산업 조립라인, 협동 로봇(cobot), 원격 수술</div>
+                </div>
+            </div>
+
+            <div class="field-card">
+                <div class="field-title">
+                    <div class="field-icon mobile">🚗</div>
+                    Mobile Robotics
+                </div>
+                <div class="field-subtitle">이동 로봇공학</div>
+                <ul class="subtopics">
+                    <li>
+                        <div class="subtopic-title">Autonomous Navigation and SLAM</div>
+                        <div class="subtopic-desc">로봇이 스스로 길을 찾아가며 동시에 지도를 만드는 기술 (자율주행의 핵심)</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Multi-robot Systems and Swarm Robotics</div>
+                        <div class="subtopic-desc">여러 로봇이 협력해 작업하는 시스템 (드론 편대비행, 창고 로봇들)</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Outdoor and Field Robotics</div>
+                        <div class="subtopic-desc">실외 환경에서 작동하는 로봇 (농업용, 탐사용, 구조용 로봇)</div>
+                    </li>
+                </ul>
+                <div class="applications">
+                    <div class="applications-title">📍 주요 응용 분야</div>
+                    <div class="applications-list">자율주행차, 무인 배송로봇, 실내 자율주행, 드론 군집 비행, 물류창고 다수 로봇 운용</div>
+                </div>
+            </div>
+
+            <div class="field-card">
+                <div class="field-title">
+                    <div class="field-icon hri">🤝</div>
+                    Human-Robot Interaction
+                </div>
+                <div class="field-subtitle">인간-로봇 상호작용</div>
+                <ul class="subtopics">
+                    <li>
+                        <div class="subtopic-title">Social Robotics and Companion Robots</div>
+                        <div class="subtopic-desc">사람과 자연스럽게 상호작용하는 로봇 (페퍼 로봇, 반려 로봇)</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Collaborative Robotics (Cobots)</div>
+                        <div class="subtopic-desc">사람과 함께 일하는 협업 로봇 (공장에서 사람 옆에서 함께 작업)</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Natural Language Interface for Robots</div>
+                        <div class="subtopic-desc">음성이나 자연어로 로봇에게 명령을 내리는 기술</div>
+                    </li>
+                </ul>
+                <div class="applications">
+                    <div class="applications-title">📍 주요 응용 분야</div>
+                    <div class="applications-list">사회적 로봇, 재활·치료 로봇, 협동 작업</div>
+                </div>
+            </div>
+
+            <div class="field-card">
+                <div class="field-title">
+                    <div class="field-icon medical">🏥</div>
+                    Medical Robotics
+                </div>
+                <div class="field-subtitle">의료 로봇공학</div>
+                <ul class="subtopics">
+                    <li>
+                        <div class="subtopic-title">Surgical Robotics</div>
+                        <div class="subtopic-desc">수술을 보조하거나 직접 수행하는 로봇 (다빈치 수술 로봇)</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Rehabilitation and Assistive Robotics</div>
+                        <div class="subtopic-desc">재활치료를 돕거나 장애인을 보조하는 로봇</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Bio-inspired and Soft Robotics</div>
+                        <div class="subtopic-desc">생체 모방 및 부드러운 소재로 만든 로봇 (문어 다리 같은 로봇)</div>
+                    </li>
+                </ul>
+                <div class="applications">
+                    <div class="applications-title">📍 주요 응용 분야</div>
+                    <div class="applications-list">정밀 수술, 재활 치료, 고령자 돌봄</div>
+                </div>
+            </div>
+
+            <div class="field-card">
+                <div class="field-title">
+                    <div class="field-icon perception">👁️</div>
+                    Perception and Sensing
+                </div>
+                <div class="field-subtitle">인지 및 감지</div>
+                <ul class="subtopics">
+                    <li>
+                        <div class="subtopic-title">Computer Vision for Robotics</div>
+                        <div class="subtopic-desc">로봇이 카메라로 주변을 이해하는 기술 (물체 인식, 장애물 감지)</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Multi-modal Sensor Fusion</div>
+                        <div class="subtopic-desc">여러 종류의 센서 정보를 합쳐서 더 정확한 판단을 내리는 기술</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">3D Scene Understanding</div>
+                        <div class="subtopic-desc">3차원 공간을 이해하고 분석하는 기술 (깊이 인식, 공간 구조 파악)</div>
+                    </li>
+                </ul>
+                <div class="applications">
+                    <div class="applications-title">📍 주요 응용 분야</div>
+                    <div class="applications-list">SLAM(지도 작성), 객체 인식, 사람 동작 인식</div>
+                </div>
+            </div>
+
+            <div class="field-card">
+                <div class="field-title">
+                    <div class="field-icon learning">🧠</div>
+                    Learning and Control
+                </div>
+                <div class="field-subtitle">학습 및 제어</div>
+                <ul class="subtopics">
+                    <li>
+                        <div class="subtopic-title">Robot Learning and Imitation Learning</div>
+                        <div class="subtopic-desc">로봇이 스스로 학습하거나 사람을 따라하며 배우는 기술</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Reinforcement Learning for Robotics</div>
+                        <div class="subtopic-desc">시행착오를 통해 최적의 행동을 학습하는 기술</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Optimal Control and Motion Planning</div>
+                        <div class="subtopic-desc">가장 효율적인 경로와 동작을 계획하고 제어하는 기술</div>
+                    </li>
+                </ul>
+                <div class="applications">
+                    <div class="applications-title">📍 주요 응용 분야</div>
+                    <div class="applications-list">로봇팔의 물체 집기, 보행 로봇 균형 제어</div>
+                </div>
+            </div>
+
+            <div class="field-card">
+                <div class="field-title">
+                    <div class="field-icon foundation">🌐</div>
+                    Foundation Models for Robotics
+                </div>
+                <div class="field-subtitle">파운데이션 모델 기반 로보틱스</div>
+                <ul class="subtopics">
+                    <li>
+                        <div class="subtopic-title">Vision-Language-Action (VLA) 모델</div>
+                        <div class="subtopic-desc">로봇의 행동을 언어로 취급하여 강력한 VLM을 로봇 제어에 미세조정</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">웹 스케일 지식 전이</div>
+                        <div class="subtopic-desc">인터넷 규모 데이터로 학습된 모델의 일반화된 세계 지식을 물리적 로봇에 이전</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">의미론적 추론</div>
+                        <div class="subtopic-desc">훈련 데이터에 명시적으로 포함되지 않은 추상적 명령 이해 및 수행</div>
+                    </li>
+                </ul>
+                <div class="applications">
+                    <div class="applications-title">📍 주요 응용 분야</div>
+                    <div class="applications-list">RT-2 (Google), RoboCat (DeepMind), 자기 개선 파운데이션 에이전트</div>
+                </div>
+            </div>
+
+            <div class="field-card">
+                <div class="field-title">
+                    <div class="field-icon contact">✋</div>
+                    Contact-Rich Manipulation
+                </div>
+                <div class="field-subtitle">접촉-집중 조작</div>
+                <ul class="subtopics">
+                    <li>
+                        <div class="subtopic-title">힘/토크 센서 기반 제어</div>
+                        <div class="subtopic-desc">물체와의 접촉 상황에서 정밀한 힘 제어를 통한 조작</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">다단계 장기 과제(Long-horizon Tasks)</div>
+                        <div class="subtopic-desc">서랍 열기 → 물건 꺼내기 → 테이블에 놓기 등 순차적 작업</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Dynamic Manipulation</div>
+                        <div class="subtopic-desc">던지기, 잡기 등 동적인 조작 기술</div>
+                    </li>
+                </ul>
+                <div class="applications">
+                    <div class="applications-title">📍 주요 응용 분야</div>
+                    <div class="applications-list">정밀 조립, 요리 로봇, 일상생활 보조</div>
+                </div>
+            </div>
+
+            <div class="field-card">
+                <div class="field-title">
+                    <div class="field-icon sim2real">🔄</div>
+                    Sim-to-Real Transfer
+                </div>
+                <div class="field-subtitle">시뮬레이션-실제 전이</div>
+                <ul class="subtopics">
+                    <li>
+                        <div class="subtopic-title">Domain Randomization</div>
+                        <div class="subtopic-desc">시뮬레이션 매개변수를 무작위화하여 실제 환경 차이에 강건하게 훈련</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">System Identification</div>
+                        <div class="subtopic-desc">실제 환경의 동역학 모델을 학습하고 온라인 정책 조정</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">생성 모델 기반 데이터 증강</div>
+                        <div class="subtopic-desc">GAN, VAE, 확산 모델을 통한 고품질 합성 훈련 데이터 생성</div>
+                    </li>
+                </ul>
+                <div class="applications">
+                    <div class="applications-title">📍 주요 응용 분야</div>
+                    <div class="applications-list">시뮬레이션 훈련 → 실제 로봇 배포</div>
+                </div>
+            </div>
+
+            <div class="field-card">
+                <div class="field-title">
+                    <div class="field-icon humanoid">🚶</div>
+                    Humanoid Robotics
+                </div>
+                <div class="field-subtitle">휴머노이드 로봇공학</div>
+                <ul class="subtopics">
+                    <li>
+                        <div class="subtopic-title">Bipedal Locomotion</div>
+                        <div class="subtopic-desc">두 다리로 걷는 기술 (동적 균형 제어, 보행 패턴 생성)</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Whole-body Control</div>
+                        <div class="subtopic-desc">전신을 협조적으로 제어하는 기술</div>
+                    </li>
+                    <li>
+                        <div class="subtopic-title">Human-like Interaction</div>
+                        <div class="subtopic-desc">인간과 유사한 형태와 동작을 통한 상호작용</div>
+                    </li>
+                </ul>
+                <div class="applications">
+                    <div class="applications-title">📍 주요 응용 분야</div>
+                    <div class="applications-list">안내 로봇, 서비스 로봇, 재난 구조</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
